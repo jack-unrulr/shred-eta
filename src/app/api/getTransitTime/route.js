@@ -20,7 +20,7 @@ export async function GET(request) {
     const apiKey = process.env.GOOGLE_MAPS_API_KEY;
     const url = `${GOOGLE_MAPS_API_URL}?origin=${encodeURIComponent(
       userAddress
-    )}&destination=${encodeURIComponent(resortAddress)}&key=${apiKey}`;
+    )}&destination=${encodeURIComponent(resortAddress)}&key=${apiKey}&departure_time=now&traffic_model=best_guess&mode=driving`;
 
     // 3. Make the API call
     const response = await fetch(url);
@@ -42,7 +42,7 @@ export async function GET(request) {
       );
     }
 
-    const transitTime = data.routes[0]?.legs[0]?.duration?.text || "Unavailable";
+    const transitTime = data.routes[0]?.legs[0]?.duration_in_traffic?.text || "Unavailable";
 
     // 6. Log for debugging
     console.log(
