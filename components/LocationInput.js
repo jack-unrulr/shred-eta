@@ -91,13 +91,13 @@ function LocationInput({ onLocationChange }) {
   };
 
   
-  if(!isGeolocationComplete) {
-    return (
-      <div className="text-gray-600 text-lg">
-        Detecting your location...
-      </div>
-    );
-  }
+  // if(!isGeolocationComplete) {
+  //   return (
+  //     <div className="text-gray-600 text-lg">
+  //       Detecting your location...
+  //     </div>
+  //   );
+  // }
     
     return (
       <div className="w-full">
@@ -107,7 +107,7 @@ function LocationInput({ onLocationChange }) {
             className="w-full p-4 text-lg font-bold text-gray-900 placeholder-gray-400 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             id="location"
             type="text"
-            placeholder="1234 Milehigh St, Denver, CO"
+            placeholder={!isGeolocationComplete ? "Detecting your location..." : "1234 Milehigh St, Denver, CO"} 
             value={input}
             onChange={handleInput}
             ref={inputRef}

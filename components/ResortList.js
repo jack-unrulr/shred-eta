@@ -105,14 +105,14 @@ function ResortList({ userLocation }) {
     <div className="mt-16 w-full">
       
       <h2 className="block text-xl font-semibold text-gray-700">
-        Time to Resorts from {userLocation || "Finding your location..."}
+        {userLocation ? "Time to Resorts from " + userLocation : "Detecting your location..."}
       </h2>
-      
+
       <ul className="mt-8 w-full space-y-4">
         {resortsList.map((resort) => (
           
           <li
-            className={`w-full flex justify-between items-center bg-white shadow-md rounded-lg p-6 relative 
+            className={`resort-item w-full flex justify-between items-center bg-white shadow-md rounded-lg p-6 relative 
             ${resort.tag === "Closest" ? "border-2 border-green-500 items-baseline" : ""}`}
             key={resort.name}
           >
@@ -124,13 +124,15 @@ function ResortList({ userLocation }) {
             )}
 
             <div className="flex items-center">
-              <img
-                src={resort.img}
-                alt={resort.name}
-                className="w-10 h-10 rounded-lg mr-4"
-              />
+              
+                <img
+                  src={resort.img}
+                  alt={resort.name}
+                  className="w-10 h-10 rounded-lg mr-6"
+                />
               
               <div className="space-y-1">
+                
                 <div className="flex items-center space-x-2">
                   <a
                     href={resort.url}
@@ -139,30 +141,45 @@ function ResortList({ userLocation }) {
                     {resort.name}
                   </a>
                   {resort.pass === "Ikon" && (
-                    <p className="bg-yellow-400 text-white text-xs font-semibold px-2 py-1 rounded">
+                    <p className="bg-yellow-400 text-white text-xs font-semibold px-1 py-0.5 rounded">
                     Ikon
                     </p>
                   )}
               
                   {resort.pass === "Epic" && (
-                    <p className="bg-blue-900 text-white text-xs font-semibold px-2 py-1 rounded">
+                    <p className="bg-blue-900 text-white text-xs font-semibold px-1 py-0.5 rounded">
                      Epic
                     </p>
                   )}
                 
                 </div>
 
-                <p className="text-md font-semibold text-gray-700">
-                  {resort.transitTime ? resort.transitTime : "Loading..."}
+                <p className="text-lg font-semibold text-gray-700">
+                  {resort.transitTime ? "🛻 "+resort.transitTime : "Loading..."}
                 </p>
+                
+                <div className="flex space-x-2">
+                  <p className="text-md font-semibold text-gray-700">🌨️ Recent Snowfall: </p>
+                  <p className="text-md font-medium text-gray-600">{snowfallData[resort.name]?.snowfall || "Loading..."} </p>
+                </div>
+              
               </div>  
             </div>
             
-            <div className="flex space-x-2"><p className="text-md font-semibold text-gray-700"> Recent Snowfall: </p><p className="text-md font-medium text-gray-600">{snowfallData[resort.name]?.snowfall || "Loading..."} </p></div>
+            
           </li>
+          
         ))}
       </ul>
-    </div> 
+      <style jsx>{`
+        @media (max-width: 640px) {
+          .resort-item {
+            flex-direction: column;
+            align-items: flex-start;
+          }
+        }
+      `}</style>
+    </div>
   );
 }
 
