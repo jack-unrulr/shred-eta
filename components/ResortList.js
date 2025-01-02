@@ -130,21 +130,35 @@ function ResortList({ userLocation }) {
                 className="w-10 h-10 rounded-lg mr-4"
               />
               
-              <div>
-                <a
-                  href={resort.url}
-                  className="text-xl font-bold text-blue-600 hover:underline"
-                >
-                  {resort.name}
-                </a>
+              <div className="space-y-1">
+                <div className="flex items-center space-x-2">
+                  <a
+                    href={resort.url}
+                    className="text-xl font-bold text-blue-950 hover:underline"
+                  >
+                    {resort.name}
+                  </a>
+                  {resort.pass === "Ikon" && (
+                    <p className="bg-yellow-400 text-white text-xs font-semibold px-2 py-1 rounded">
+                    Ikon
+                    </p>
+                  )}
+              
+                  {resort.pass === "Epic" && (
+                    <p className="bg-blue-900 text-white text-xs font-semibold px-2 py-1 rounded">
+                     Epic
+                    </p>
+                  )}
+                
+                </div>
+
                 <p className="text-md font-semibold text-gray-700">
                   {resort.transitTime ? resort.transitTime : "Loading..."}
                 </p>
-              </div>
+              </div>  
             </div>
-
             
-            <p className="text-md font-semibold text-gray-700"> Recent Snowfall: {snowfallData[resort.name]?.snowfall || "Loading..."} </p>
+            <div className="flex space-x-2"><p className="text-md font-semibold text-gray-700"> Recent Snowfall: </p><p className="text-md font-medium text-gray-600">{snowfallData[resort.name]?.snowfall || "Loading..."} </p></div>
           </li>
         ))}
       </ul>
