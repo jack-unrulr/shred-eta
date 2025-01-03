@@ -10,6 +10,9 @@ function LocationInput({ onLocationChange }) {
   // Local state for manual input tracking
   const [manualInput, setManualInput] = useState(false);
 
+  // Local state for geolocation address
+  const [geolocationAddress, setGeolocationAddress] = useState("");
+
   // Ref to input element
   const inputRef = useRef(null);
 
@@ -42,6 +45,9 @@ function LocationInput({ onLocationChange }) {
 
           // Call reverse geocoding API
           const address = await fetchReverseGeocode(latitude, longitude);
+          
+          // Store geolocation address
+          setGeolocationAddress(address); // Store geolocation address
 
           if (!manualInput) {
             setInput(address); // Update local state
@@ -89,20 +95,35 @@ function LocationInput({ onLocationChange }) {
     e.preventDefault(); // Prevent default form behavior
     onLocationChange(input); // Update parent state
   };
+
+  // Reset input to geolocation address
+  const handleReset = () => {
+    setInput(geolocationAddress);
+    onLocationChange(geolocationAddress);
+    setManualInput(false);
+  }
     
     return (
       <div className="w-full">
         <form className="bg-white shadow-lg rounded-lg p-6 w-full" onSubmit={handleSubmit}>
           <label className="block text-lg font-semibold mb-2 text-gray-700" htmlFor="location">WYA?</label>
-          <input
-            className="location-input w-full p-4 text-lg font-bold text-gray-900 placeholder-gray-400 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            id="location"
-            type="text"
-            placeholder={!isGeolocationComplete ? "Detecting your location..." : "1234 Milehigh St, Denver, CO"} 
-            value={input}
-            onChange={handleInput}
-            ref={inputRef}
-          />
+          <div className="flex items-center space-x-2">
+            <input
+              className="location-input w-full p-4 text-lg font-bold text-gray-900 placeholder-gray-400 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              id="location"
+              type="text"
+              placeholder={!isGeolocationComplete ? "Detecting your location..." : "1234 Milehigh St, Denver, CO"} 
+              value={input}
+              onChange={handleInput}
+              ref={inputRef}
+            />
+            <button type="button"
+              onClick={handleReset}
+              className="text-lg p-4 rounded-lg hover:bg-gray-200"
+              disabled={!geolocationAddress || geolocationAddress === input}
+              >🌎
+            </button>
+          </div>
           <button className="mt-4 w-full bg-blue-500 text-white font-semibold py-3 rounded-lg shadow-md hover:bg-blue-600" type="submit">Let's Shred!</button>
         </form>
         
