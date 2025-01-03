@@ -102,10 +102,11 @@ function ResortList({ userLocation }) {
   }, []);
 
   return (
-    <div className="mt-16 w-full">
+    <div className="mt-12 w-full">
       
-      <h2 className="block text-xl font-semibold text-gray-700">
-        {userLocation ? "Time to Resorts from " + userLocation : "Detecting your location..."}
+      <h2 className="resort-list-h2 block text-xl font-semibold text-gray-700">
+        Time to Resorts from{" "}
+        <span className="text-blue-500">{userLocation || "Detecting your location..."}</span>
       </h2>
 
       <ul className="mt-8 w-full space-y-4">
@@ -118,17 +119,17 @@ function ResortList({ userLocation }) {
           >
             
             {resort.tag === "Closest" && (
-              <p className="absolute top-4 right-4 bg-green-500 text-white text-xs font-semibold px-2 py-1 rounded">
+              <p className="absolute top-2 right-2 bg-green-500 text-white text-xs font-semibold px-2 py-1 rounded">
                 Closest
               </p>
             )}
 
-            <div className="flex items-center">
+            <div className="li-inner-flex flex items-center">
               
                 <img
                   src={resort.img}
                   alt={resort.name}
-                  className="w-10 h-10 rounded-lg mr-6"
+                  className="resort-logo w-10 h-10 rounded-lg mr-6"
                 />
               
               <div className="space-y-1">
@@ -136,7 +137,7 @@ function ResortList({ userLocation }) {
                 <div className="flex items-center space-x-2">
                   <a
                     href={resort.url}
-                    className="text-xl font-bold text-blue-950 hover:underline"
+                    className="resort-name text-xl font-bold text-blue-950 hover:underline"
                   >
                     {resort.name}
                   </a>
@@ -154,13 +155,13 @@ function ResortList({ userLocation }) {
                 
                 </div>
 
-                <p className="text-lg font-semibold text-gray-700">
+                <p className="transit-time text-lg font-semibold text-gray-700">
                   {resort.transitTime ? "🛻 "+resort.transitTime : "Loading..."}
                 </p>
                 
-                <div className="flex space-x-2">
-                  <p className="text-md font-semibold text-gray-700">🌨️ Recent Snowfall: </p>
-                  <p className="text-md font-medium text-gray-600">{snowfallData[resort.name]?.snowfall || "Loading..."} </p>
+                <div className="snowfall-div text-md flex space-x-2">
+                  <p className="font-semibold text-gray-700">🌨️ Recent Snowfall: </p>
+                  <p className="font-medium text-gray-600">{snowfallData[resort.name]?.snowfall || "Loading..."} </p>
                 </div>
               
               </div>  
@@ -171,14 +172,37 @@ function ResortList({ userLocation }) {
           
         ))}
       </ul>
+      
+      {/* Styling for mobile */}
       <style jsx>{`
         @media (max-width: 640px) {
+          .resort-list-h2 {
+            font-size: 1.2rem;
+          }
           .resort-item {
             flex-direction: column;
             align-items: flex-start;
           }
-        }
+          .li-inner-flex {
+            flex-direction: column;
+            align-items: flex-start;
+          }
+          .snowfall-div{
+            font-size: 0.8rem;
+          }
+          .resort-name {
+            font-size: 1.2rem;
+          }
+          .transit-time {
+            font-size: 1rem;
+          }
+          .resort-logo {
+            width: 2rem;
+            height: 2rem;
+            margin-bottom: 0.5rem;
+          }
       `}</style>
+    
     </div>
   );
 }

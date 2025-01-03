@@ -89,22 +89,13 @@ function LocationInput({ onLocationChange }) {
     e.preventDefault(); // Prevent default form behavior
     onLocationChange(input); // Update parent state
   };
-
-  
-  // if(!isGeolocationComplete) {
-  //   return (
-  //     <div className="text-gray-600 text-lg">
-  //       Detecting your location...
-  //     </div>
-  //   );
-  // }
     
     return (
       <div className="w-full">
         <form className="bg-white shadow-lg rounded-lg p-6 w-full" onSubmit={handleSubmit}>
           <label className="block text-lg font-semibold mb-2 text-gray-700" htmlFor="location">Your Location</label>
           <input
-            className="w-full p-4 text-lg font-bold text-gray-900 placeholder-gray-400 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="location-input w-full p-4 text-lg font-bold text-gray-900 placeholder-gray-400 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             id="location"
             type="text"
             placeholder={!isGeolocationComplete ? "Detecting your location..." : "1234 Milehigh St, Denver, CO"} 
@@ -114,6 +105,14 @@ function LocationInput({ onLocationChange }) {
           />
           <button className="mt-4 w-full bg-blue-500 text-white font-semibold py-3 rounded-lg shadow-md hover:bg-blue-600" type="submit">Submit</button>
         </form>
+        
+        {/* Styling for mobile */}
+        <style jsx>{`
+          @media (max-width: 640px) {
+            .location-input {
+              font-size: 1rem;
+            }
+        `}</style>
       </div>
     );
 }
