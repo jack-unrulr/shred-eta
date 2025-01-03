@@ -117,6 +117,7 @@ function ResortList({ userLocation }) {
     localStorage.setItem("passFilter", selectedFilter);
   }
   
+  // Filter and tag resorts
   useEffect(() => {
     const filteredResortsList = resortsList.filter((resort) => {
       if (passFilter === "All") return true;
@@ -135,38 +136,17 @@ function ResortList({ userLocation }) {
     tagClosestResort(filteredResortsList);
     setFilteredAndTaggedResorts(filteredResortsList);
   }, [resortsList, passFilter]);
-  // Filter resorts based on pass type
-  // const filteredResortsList = resortsList.filter((resort) => {
-  //   if (passFilter === "All") return true;
-  //   return resort.pass === passFilter;
-  // });
-
-  // // Tag the closest resort
-  // const tagClosestResort = (filteredResortsList) => {
-  //   resortsList.forEach((resort) => {
-  //     delete resort.tag;
-  //   });
-  //   if (filteredResortsList.length > 0) {
-  //     filteredResortsList[0].tag = "Closest";
-  //   }
-  // }
-  // useEffect(() => {
-  //   tagClosestResort(filteredResortsList);
-  // }, [filteredResortsList]);
-  // useEffect(() => {
-  //   tagClosestResort(filteredResortsList);
-  // }, [passFilter]);
 
   return (
     <div className="mt-12 w-full">
       
       <h2 className="resort-list-h2 block text-xl font-semibold text-gray-700">
-        Time to Resorts from{" "}
+        How long until shred from{" "}
         <span className="text-blue-500">{userLocation || "Detecting your location..."}</span>
       </h2>
 
       <div className="mt-4">
-        <label htmlFor="filter" className="mr-2 text-gray-500">Filter by Pass Type:</label>
+        <label htmlFor="filter" className="mr-2 text-gray-500">Filter by Ikon / Epic:</label>
         <select id="filter" value={passFilter} onChange={handleFilterChange} className="text-gray-600 p-1 rounded-md">
           <option value="All">All</option>
           <option value="Ikon">Ikon</option>

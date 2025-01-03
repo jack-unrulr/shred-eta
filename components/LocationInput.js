@@ -93,7 +93,7 @@ function LocationInput({ onLocationChange }) {
     return (
       <div className="w-full">
         <form className="bg-white shadow-lg rounded-lg p-6 w-full" onSubmit={handleSubmit}>
-          <label className="block text-lg font-semibold mb-2 text-gray-700" htmlFor="location">Your Location</label>
+          <label className="block text-lg font-semibold mb-2 text-gray-700" htmlFor="location">WYA?</label>
           <input
             className="location-input w-full p-4 text-lg font-bold text-gray-900 placeholder-gray-400 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             id="location"
@@ -103,7 +103,7 @@ function LocationInput({ onLocationChange }) {
             onChange={handleInput}
             ref={inputRef}
           />
-          <button className="mt-4 w-full bg-blue-500 text-white font-semibold py-3 rounded-lg shadow-md hover:bg-blue-600" type="submit">Submit</button>
+          <button className="mt-4 w-full bg-blue-500 text-white font-semibold py-3 rounded-lg shadow-md hover:bg-blue-600" type="submit">Let's Shred!</button>
         </form>
         
         {/* Styling for mobile */}
