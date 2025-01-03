@@ -101,6 +101,28 @@ function ResortList({ userLocation }) {
     fetchSnowfall();
   }, []);
 
+  // Filter resorts by pass type
+  // Default to "All"
+  const [passFilter, setPassFilter] = useState("All");
+  // Save filter to local storage
+  useEffect(() => {
+    const savedFilter = localStorage.getItem("passFilter");
+    if (savedFilter) {
+      setPassFilter(savedFilter);
+    }
+  }, []);
+  // Handle filter change
+  const handleFilterChange = (event) => {
+    const selectedFilter = event.target.value;
+    setPassFilter(event.target.value);
+    localStorage.setItem("passFilter", selectedFilter);
+  }
+  // Filter resorts based on pass type
+  const filteredResortsList = resortsList.filter((resort) => {
+    if (passFilter === "All") return true;
+    return resort.pass === passFilter;
+  });
+
   return (
     <div className="mt-12 w-full">
       
@@ -109,8 +131,17 @@ function ResortList({ userLocation }) {
         <span className="text-blue-500">{userLocation || "Detecting your location..."}</span>
       </h2>
 
+      <div className="mt-4">
+        <label htmlFor="filter" className="mr-2 text-gray-500">Filter by Pass Type:</label>
+        <select id="filter" value={passFilter} onChange={handleFilterChange} className="text-gray-600 p-1 rounded-md">
+          <option value="All">All</option>
+          <option value="Ikon">Ikon</option>
+          <option value="Epic">Epic</option>
+        </select>
+      </div>
+
       <ul className="mt-8 w-full space-y-4">
-        {resortsList.map((resort) => (
+        {filteredResortsList.map((resort) => (
           
           <li
             className={`resort-item w-full flex justify-between items-center bg-white shadow-md rounded-lg p-6 relative 
