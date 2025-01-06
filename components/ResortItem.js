@@ -3,7 +3,7 @@ import React from 'react';
 const ResortItem = React.forwardRef(({ resort, snowfallData }, ref) => (
     <li
     ref={ref}
-    className={`resort-item w-full flex justify-between items-center bg-white shadow-md rounded-lg p-6 relative 
+    className={`resort-item flex flex-grow justify-between items-center bg-white shadow-md rounded-lg p-6 relative 
     ${resort.tag === "Closest" ? "border-2 border-green-500 items-baseline" : ""}`}
     
   >
@@ -49,9 +49,9 @@ const ResortItem = React.forwardRef(({ resort, snowfallData }, ref) => (
           {resort.transitTime ? "🛻 "+resort.transitTime : "Loading..."}
         </p>
         
-        <div className="snowfall-div text-md flex space-x-2">
+        <div className="snowfall-div text-sm flex space-x-2">
           <p className="font-semibold text-gray-700">🌨️ Recent Snowfall: </p>
-          <p className="font-medium text-gray-600">{snowfallData[resort.name]?.snowfall || "Loading..."} </p>
+          <p className="font-medium text-gray-600">{snowfallData[resort.name] || "Loading..."}</p>
         </div>
       
       </div>  

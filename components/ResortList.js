@@ -66,31 +66,52 @@ function ResortList({ userLocation }) {
 
 
   // Fetch snowfall data for each resort
+  // useEffect(() => {
+  //   const fetchSnowfall = async () => {
+  //     const recentSnowfall = {};
+  //     for (const resort of resorts) {
+  //       try {
+  //         const response = await fetch(
+  //           `/api/getSnowfall?latitude=${resort.lat}&longitude=${resort.lng}`
+  //         );
+  //         const data = await response.json();
+  //         recentSnowfall[resort.name] = data.results || "No data";
+  //         console.log(`Fetched snowfall for ${resort.name}:`, data.results);
+  //       } catch (error) {
+  //         console.error(`Failed to fetch snowfall for ${resort.name}:`, error);
+  //         recentSnowfall[resort.name] = "Error";
+  //       }
+  //     }
+  //     setSnowfallData(recentSnowfall);
+  //   };
+
+  //   fetchSnowfall();
+  // }, []);
+
+  //NOAA snowfall data
   useEffect(() => {
     const fetchSnowfall = async () => {
-      const results = {};
+      const recentSnowfall = {};
       for (const resort of resorts) {
         try {
           const response = await fetch(
-            `/api/getSnowfall?latitude=${resort.lat}&longitude=${resort.lng}`
+            `/api/noaaSnowfall?latitude=${resort.lat}&longitude=${resort.lng}`
           );
           const data = await response.json();
-          if (data.results && data.results.length > 0) {
-            const firstStation = data.results[0];
-            results[resort.name] = {
-              snowfall: firstStation.snowfall || "No data",
-              station: firstStation.station || "Unknown Station",
-            };
-            console.log(`Fetched snowfall for ${resort.name}:`, firstStation);
+          if (data.snowfall) {
+            recentSnowfall[resort.name] = data.snowfall;
+          } else if (data.message) {
+            recentSnowfall[resort.name] = data.message; // No snowfall data available
           } else {
-            results[resort.name] = { snowfall: "No data", station: "No station" };
+            recentSnowfall[resort.name] = "No data available";
           }
+          console.log(`Fetched snowfall for ${resort.name}:`, data);
         } catch (error) {
           console.error(`Failed to fetch snowfall for ${resort.name}:`, error);
-          results[resort.name] = { snowfall: "Error", station: "Error" };
+          recentSnowfall[resort.name] = "Error";
         }
       }
-      setSnowfallData(results);
+      setSnowfallData(recentSnowfall);
     };
 
     fetchSnowfall();
@@ -154,7 +175,7 @@ function ResortList({ userLocation }) {
         </select>
       </div>
 
-      <TransitionGroup component="ul" className="mt-8 w-full space-y-4">
+      <TransitionGroup component="ul" className="mt-8 flex flex-wrap items-center justify-start gap-4">
         {filteredAndTaggedResorts.map((resort) => {
           if (!nodeRefs.current[resort.name]) {
             nodeRefs.current[resort.name] = createRef();
