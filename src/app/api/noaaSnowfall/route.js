@@ -15,7 +15,7 @@ export async function GET(request) {
   }
 
   // Always subtract 2 days from today's date
-  const dayToCheck = today - 2;
+  const dayToCheck = today - 1;
   console.log("Adjusted day to check (always 2 days behind):", dayToCheck);
 
   // Handle edge case for the first two days of the month

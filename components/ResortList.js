@@ -64,30 +64,6 @@ function ResortList({ userLocation }) {
     return hours * 60 + minutes;
   }
 
-
-  // Fetch snowfall data for each resort
-  // useEffect(() => {
-  //   const fetchSnowfall = async () => {
-  //     const recentSnowfall = {};
-  //     for (const resort of resorts) {
-  //       try {
-  //         const response = await fetch(
-  //           `/api/getSnowfall?latitude=${resort.lat}&longitude=${resort.lng}`
-  //         );
-  //         const data = await response.json();
-  //         recentSnowfall[resort.name] = data.results || "No data";
-  //         console.log(`Fetched snowfall for ${resort.name}:`, data.results);
-  //       } catch (error) {
-  //         console.error(`Failed to fetch snowfall for ${resort.name}:`, error);
-  //         recentSnowfall[resort.name] = "Error";
-  //       }
-  //     }
-  //     setSnowfallData(recentSnowfall);
-  //   };
-
-  //   fetchSnowfall();
-  // }, []);
-
   //NOAA snowfall data
   useEffect(() => {
     const fetchSnowfall = async () => {
@@ -182,7 +158,7 @@ function ResortList({ userLocation }) {
           }
           return (
             <CSSTransition key={resort.name} timeout={500} classNames="fade" nodeRef={nodeRefs.current[resort.name]}>
-              <ResortItem ref={nodeRefs.current[resort.name]} resort={resort} snowfallData={snowfallData} />
+              <ResortItem ref={nodeRefs.current[resort.name]} resort={resort} snowfallData={snowfallData} userLocation={userLocation} />
             </CSSTransition>
           );
         })}

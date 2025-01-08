@@ -1,6 +1,9 @@
 import React from 'react';
 
-const ResortItem = React.forwardRef(({ resort, snowfallData }, ref) => (
+const ResortItem = React.forwardRef(({ resort, snowfallData, userLocation }, ref) => {
+  const googleLink = `https://www.google.com/maps/dir/${encodeURIComponent(userLocation)}/${encodeURIComponent(resort.location)}`;
+
+  return (
     <li
     ref={ref}
     className={`resort-item flex flex-grow justify-between items-center bg-white shadow-md rounded-lg p-6 relative 
@@ -28,6 +31,7 @@ const ResortItem = React.forwardRef(({ resort, snowfallData }, ref) => (
           <a
             href={resort.url}
             className="resort-name text-xl font-bold text-blue-950 hover:underline"
+            target="_blank"
           >
             {resort.name}
           </a>
@@ -45,9 +49,9 @@ const ResortItem = React.forwardRef(({ resort, snowfallData }, ref) => (
         
         </div>
 
-        <p className="transit-time text-lg font-semibold text-gray-700">
+        <a href={googleLink} target="_blank" className="transit-time text-lg font-semibold text-gray-700 hover:underline">
           {resort.transitTime ? "🛻 "+resort.transitTime : "Loading..."}
-        </p>
+        </a>
         
         <div className="snowfall-div text-sm flex space-x-2">
           <p className="font-semibold text-gray-700">🌨️ Recent Snowfall: </p>
@@ -83,6 +87,7 @@ const ResortItem = React.forwardRef(({ resort, snowfallData }, ref) => (
           }
       `}</style>
   </li>
-));
+  );
+});
 
 export default ResortItem;
